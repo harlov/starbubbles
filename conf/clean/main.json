@@ -1,17 +1,6 @@
 {
-  "NodeName" : "node_main",
-  "Database": {
-    "host": "192.168.99.101",
-    "user": "postgres",
-    "password": "postgres",
-    "db": "crosspromo",
-    "port": "32768"
-  },
-  "Cache" : {
-    "host" : "192.168.99.101",
-    "port" : "32769",
-    "poolSize" : 8,
-    "ttl" : 1
-  },
-  "CDNBaseUrl" : "//logos.akamaized.net/"
+    "Server": {
+        "Host"  :   "localhost",
+        "Port"  :   "8080"
+    }
 }
