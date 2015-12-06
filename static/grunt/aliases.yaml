@@ -1,0 +1,25 @@
+default:
+  description: 'Default(Prod) build'
+  tasks:
+    - prod
+
+dev:
+  description: 'Dev build'
+  tasks:
+    - clean
+    #- 'string-replace:dev'
+    - jshint
+    - 'browserify'
+    #- 'copy:dev'
+
+
+prod:
+  description: 'Prod build'
+  tasks:
+    - clean
+    #- 'string-replace:prod'
+    #- jshint
+    #- 'coffee:compileProd'
+    #- uglify
+    #- 'copy:prod'
+    #- 'ftp_push:commonstatic'
