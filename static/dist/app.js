@@ -1,3 +1,6 @@
+var name = 'harlov';
+
+
 
  conn = new WebSocket("ws://"+location.host+"/game_ws?name=" + name);
                 conn.onopen = function() {
