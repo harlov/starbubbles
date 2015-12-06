@@ -1,0 +1,22 @@
+{
+  "name": "starbubbles-client",
+  "description": "starbubbles-client",
+  "main": "app.js",
+  "authors": [
+    "Nikita Harlov <nikita@harlov.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/harlov/starbubbles",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4"
+  }
+}

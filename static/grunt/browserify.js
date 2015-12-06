@@ -7,7 +7,7 @@ module.exports = {
         browserifyOptions:  {
             extensions: '.coffee'
         },
-        transform: ['coffeeify']
+        transform: ['coffeeify', 'debowerify']
     }
   }
 };

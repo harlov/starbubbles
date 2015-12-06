@@ -11,6 +11,7 @@ dev:
     - jshint
     - 'htmlmin:dev'
     - 'browserify'
+    - 'less'
     #- 'copy:dev'
 
 
