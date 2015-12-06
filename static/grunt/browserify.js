@@ -4,7 +4,10 @@ module.exports = {
       'dist/app.js': ['src/scripts/**/*.coffee']
     },
     options: {
-      transform: ['coffeeify']
+        browserifyOptions:  {
+            extensions: '.coffee'
+        },
+        transform: ['coffeeify']
     }
   }
 };

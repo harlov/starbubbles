@@ -9,6 +9,7 @@ dev:
     - clean
     #- 'string-replace:dev'
     - jshint
+    - 'htmlmin:dev'
     - 'browserify'
     #- 'copy:dev'
 
