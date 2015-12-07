@@ -1,4 +1,4 @@
-cd static
-grunt dev
-cd ../
+#cd static
+#grunt dev
+#cd ../
 go run starbubbles.go

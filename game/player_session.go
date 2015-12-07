@@ -10,10 +10,10 @@ type PlayerSession struct {
     Socket *websocket.Conn
     Player *Player
     Game *Game
-    Position Cordinate
     Direction Cordinate
+    Balls []*Ball
     Score float32
-    Mass float32
+    
 }
 
 type PlayerSessionCommand struct {
