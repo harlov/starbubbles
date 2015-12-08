@@ -1,6 +1,6 @@
 package game
 
 type Cordinate struct {
-    x float32
-    y float32
+	X float32
+	Y float32
 }
