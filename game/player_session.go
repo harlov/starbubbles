@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/gorilla/websocket"
 	"log"
+	"math"
 )
 
 type PlayerSession struct {
@@ -43,7 +44,10 @@ func (ps *PlayerSession) receiver() {
 }
 
 func (ps *PlayerSession) serverCommand(command PlayerSessionCommand) {
-	log.Printf("method : %s \n", command.Method)
+	switch command.Method {
+	case "updateDirection" :
+		ps.updateDirection(command)
+	}
 }
 
 func (ps *PlayerSession) sendClientCommand(command PlayerSessionCommand) {
@@ -52,6 +56,20 @@ func (ps *PlayerSession) sendClientCommand(command PlayerSessionCommand) {
 	if err != nil {
 		ps.Socket.Close()
 	}
+}
+
+
+func (ps *PlayerSession) updateDirection(command PlayerSessionCommand) {	
+	xDif := math.Cos(command.Params["directionAngelRad"].(float64) ) * ps.getSpeed()
+	yDif := math.Sin(command.Params["directionAngelRad"].(float64) )  * ps.getSpeed()
+	log.Printf("update Direction : x : %f, y: %f  \n", xDif, yDif )
+	ps.Direction.X = float32(xDif)
+	ps.Direction.Y = float32(yDif)
+
+}
+
+func (ps *PlayerSession) getSpeed() float64 {
+	return 5.0
 }
 
 func (ps *PlayerSession) moveBalls() []*Ball {

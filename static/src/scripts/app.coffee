@@ -7,8 +7,8 @@ class window.Application
     getUserLogin: ->
         return $('#player_name')[0].value
     afterLogin: ->
-        $('#login-container').addClass('hided')
-        $('#game-container').removeClass('hided')
+        $('#content-wrap').addClass('hided')
+        $('#game-wrap').removeClass('hided')
 
     newGame: ->
         username = @getUserLogin()

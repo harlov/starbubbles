@@ -36,13 +36,6 @@ func gameWebsocketSocHandler(app *App, w http.ResponseWriter, r *http.Request) {
 	select_game.JoinPlayer(session)
 
 	log.Println("player joined to game")
-
-	var game_name = (*select_game).Name
-
-	
-
-	ws.WriteMessage(websocket.TextMessage, []byte("hello, gamer! wellcome to game"))
-	ws.WriteMessage(websocket.TextMessage, []byte(game_name))
 }
 
 func staticHandler(w http.ResponseWriter, r *http.Request) {

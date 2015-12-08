@@ -15,6 +15,9 @@ class GamePipe
     subscribePipe: (cb) ->
         @dataCbs.push(cb)
 
+    sendCommand: (command) ->
+        @socket.send(JSON.stringify(command))
+
     onSocketOpen: ->
 
     onSocketClose: ->

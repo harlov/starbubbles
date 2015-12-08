@@ -1,20 +1,28 @@
 GamePipe = require './core/game_pipe'
+Controls = require './core/controls'
 $ = window.jQuery = require ('jquery')
 
 class Game
     constructor: (username) ->
         ctx = @
         console.log username
-        @game_pipe = new GamePipe username
-        @game_pipe.subscribePipe((data)-> ctx.pipeRecive data )
-        @initCanvas()        
+        @pipe = new GamePipe username
+        @pipe.subscribePipe((data)-> ctx.pipeRecive data )
+        @initCanvas()
+        @controls = new Controls ctx
 
     pipeRecive: (data) ->
         ball = data.Params.Balls[0]
-        @drawPlayerBubble(ball.Position.X, ball.Position.Y, ball.Mass)
+        @drawPlayerBubble ball.Position.X, ball.Position.Y, ball.Mass
+        @controls.update()
 
-    initCanvas: ->
-        @canvas = $('#game-container')[0]
+    initCanvas: ->        
+        $('#game-wrap').append('<canvas id="game-container"></canvas>')
+        @canvas = $('#game-container')[0];
+        
+        $('#game-container').attr('width', $('#game-wrap').width()+'px')
+        $('#game-container').attr('height', $('#game-wrap').height()+'px')
+
         @dc = @canvas.getContext '2d'
 
     clearCanvas: ->

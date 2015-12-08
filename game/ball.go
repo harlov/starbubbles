@@ -19,6 +19,8 @@ func NewBall(init_mass float32, ix float32, iy float32) *Ball {
 }
 
 func (b *Ball) move(direction Cordinate) {
-	b.Position.X += 1
+	b.Position.X += direction.X
+	b.Position.Y += direction.Y
+	
 	log.Println("   ball moved")
 }
