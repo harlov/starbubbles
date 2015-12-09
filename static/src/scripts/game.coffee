@@ -6,6 +6,7 @@ class Game
     constructor: (username) ->
         ctx = @
         console.log username
+        @loadResources()
         @pipe = new GamePipe username
         @pipe.subscribePipe((data)-> ctx.pipeRecive data )
         @initCanvas()
@@ -13,8 +14,23 @@ class Game
 
     pipeRecive: (data) ->
         ball = data.Params.Balls[0]
-        @drawPlayerBubble ball.Position.X, ball.Position.Y, ball.Mass
+        console.log(@controls.centerPos)
+        @clearCanvas()
+        
+        @drawBack()
+        @drawPlayerBubble @controls.centerPos.x, @controls.centerPos.y, ball.Mass
         @controls.update()
+        
+        
+    loadResources: () ->
+        @resources = {}
+        img_back = new Image()
+        img_back.src = '/resources/img/back_1.png'
+
+        @resources['back'] = img_back
+
+    drawBack: () ->
+        @dc.drawImage(@resources['back'], 0, 0)
 
     initCanvas: ->        
         $('#game-wrap').append('<canvas id="game-container"></canvas>')
@@ -29,12 +45,11 @@ class Game
         @dc.clearRect(0,0,1000,1000);
 
     drawPlayerBubble: (x,y, mass) ->
-        @clearCanvas()
         @dc.beginPath()
         @dc.fillStyle = 'green'
-        @dc.arc(x, y, mass, 0, Math.PI*2, false)
-        @dc.fill();
-        @dc.closePath();
+        @dc.arc(x, y, mass/2, 0, Math.PI*2, false)
+        @dc.fill()
+        @dc.closePath()
         
 
 module.exports = Game

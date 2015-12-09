@@ -19,7 +19,6 @@ class Controls
     drawDirectionLine: ->
         if not @mousePos
             return
-        @dc.beginPath()
         @dc.moveTo @centerPos.x, @centerPos.y
         @dc.lineTo @mousePos.x,@mousePos.y
         @dc.stroke()

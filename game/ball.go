@@ -1,6 +1,5 @@
 package game
 
-import "log"
 
 type Ball struct {
 	Position Cordinate
@@ -18,9 +17,4 @@ func NewBall(init_mass float32, ix float32, iy float32) *Ball {
 	return &ball
 }
 
-func (b *Ball) move(direction Cordinate) {
-	b.Position.X += direction.X
-	b.Position.Y += direction.Y
-	
-	log.Println("   ball moved")
-}
+

@@ -12,6 +12,7 @@ dev:
     - 'htmlmin:dev'
     - 'browserify'
     - 'less'
+    - 'copy:resources'
     #- 'copy:dev'
 
 

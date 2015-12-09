@@ -5,6 +5,7 @@ import (
 	"github.com/gorilla/websocket"
 	"log"
 	"math"
+	"time"
 )
 
 type PlayerSession struct {
@@ -25,7 +26,11 @@ type PlayerSessionCommand struct {
 
 func NewSession(ws *websocket.Conn, player *Player, game *Game) *PlayerSession {
 	ps := PlayerSession{Socket: ws, Player: player, Game: game}
+	ps.Balls = append(ps.Balls, NewBall(50, 100.0, 100.0))
+	ps.Direction = Cordinate{X: 5, Y: 5}
+	
 	go ps.receiver()
+	go ps.loop()
 	return &ps
 }
 
@@ -59,6 +64,21 @@ func (ps *PlayerSession) sendClientCommand(command PlayerSessionCommand) {
 }
 
 
+func (ps *PlayerSession) loop() {
+	var stepDelay int32 = 20
+	for {
+		time.Sleep(time.Duration(stepDelay) * time.Millisecond)
+		ps.sendPlayerState()
+	}
+}
+
+
+func (ps *PlayerSession) sendPlayerState() {
+	balls_pos := ps.moveBalls()
+	ps.sendClientCommand(PlayerSessionCommand{Method: "player_state", Params: CommandParams{"Balls": balls_pos}})
+} 
+
+
 func (ps *PlayerSession) updateDirection(command PlayerSessionCommand) {	
 	xDif := math.Cos(command.Params["directionAngelRad"].(float64) ) * ps.getSpeed()
 	yDif := math.Sin(command.Params["directionAngelRad"].(float64) )  * ps.getSpeed()
@@ -74,7 +94,7 @@ func (ps *PlayerSession) getSpeed() float64 {
 
 func (ps *PlayerSession) moveBalls() []*Ball {
 	for _, ball := range ps.Balls {
-		ball.move(ps.Direction)
+		ps.Game.Field.moveBall(ball, &ps.Direction)
 	}
 	return ps.Balls
 }

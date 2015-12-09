@@ -1,4 +1,4 @@
 module.exports =
     scripts:
-        files: ['src/**'],
+        files: ['src/**']
         tasks: ['dev']
