@@ -26,7 +26,7 @@ class Game
     loadResources: () ->
         @resources = {}
         img_back = new Image()
-        img_back.src = '/resources/img/back_1.png'
+        img_back.src = '/resources/img/back_3.jpeg'
 
         @resources['back'] = img_back
 
@@ -36,8 +36,8 @@ class Game
         @dc.stroke()
 
     drawBack: (cX, cY) ->
-        bw = 135
-        bh = 135
+        bw = 512
+        bh = 512
 
         startPosX = - ( cX % bw )
         startPosY = - ( cY % bh )
