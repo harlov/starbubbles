@@ -20,7 +20,7 @@ class Game
         @drawBack()
         @drawPlayerBubble @controls.centerPos.x, @controls.centerPos.y, ball.Mass
         @controls.update()
-        
+
         
     loadResources: () ->
         @resources = {}
@@ -30,14 +30,34 @@ class Game
         @resources['back'] = img_back
 
     drawBack: () ->
-        @dc.drawImage(@resources['back'], 0, 0)
+        bw = 135
+        bh = 135
+
+        startPosX = 0
+        startPosY = 0
+
+        posX = startPosX
+        posY = startPosY
+        fW = @field['width']
+        fH = @field['height']
+        while posX < fW
+            posY = startPosY
+            while posY < fH
+                @dc.drawImage(@resources['back'], posX, posY)
+                posY += bh
+                console.log posY, fH
+            posX += bw
 
     initCanvas: ->        
         $('#game-wrap').append('<canvas id="game-container"></canvas>')
         @canvas = $('#game-container')[0];
         
-        $('#game-container').attr('width', $('#game-wrap').width()+'px')
-        $('#game-container').attr('height', $('#game-wrap').height()+'px')
+        @field = 
+            'width': $('#game-wrap').width()
+            'height': $('#game-wrap').height()
+
+        $('#game-container').attr('width', @field['width']+'px')
+        $('#game-container').attr('height', @field['height']+'px')
 
         @dc = @canvas.getContext '2d'
 
