@@ -27,8 +27,8 @@ type PlayerSessionCommand struct {
 func NewSession(ws *websocket.Conn, player *Player, game *Game) *PlayerSession {
 	ps := PlayerSession{Socket: ws, Player: player, Game: game}
 	ps.Balls = append(ps.Balls, NewBall(50, 100.0, 100.0))
-	ps.Direction = Cordinate{X: 5, Y: 5}
-	
+	ps.Direction = Cordinate{X: 1, Y: 1}
+
 	go ps.receiver()
 	go ps.loop()
 	return &ps
@@ -50,7 +50,7 @@ func (ps *PlayerSession) receiver() {
 
 func (ps *PlayerSession) serverCommand(command PlayerSessionCommand) {
 	switch command.Method {
-	case "updateDirection" :
+	case "updateDirection":
 		ps.updateDirection(command)
 	}
 }
@@ -63,7 +63,6 @@ func (ps *PlayerSession) sendClientCommand(command PlayerSessionCommand) {
 	}
 }
 
-
 func (ps *PlayerSession) loop() {
 	var stepDelay int32 = 20
 	for {
@@ -72,17 +71,15 @@ func (ps *PlayerSession) loop() {
 	}
 }
 
-
 func (ps *PlayerSession) sendPlayerState() {
 	balls_pos := ps.moveBalls()
 	ps.sendClientCommand(PlayerSessionCommand{Method: "player_state", Params: CommandParams{"Balls": balls_pos}})
-} 
+}
 
-
-func (ps *PlayerSession) updateDirection(command PlayerSessionCommand) {	
-	xDif := math.Cos(command.Params["directionAngelRad"].(float64) ) * ps.getSpeed()
-	yDif := math.Sin(command.Params["directionAngelRad"].(float64) )  * ps.getSpeed()
-	log.Printf("update Direction : x : %f, y: %f  \n", xDif, yDif )
+func (ps *PlayerSession) updateDirection(command PlayerSessionCommand) {
+	xDif := math.Cos(command.Params["directionAngelRad"].(float64)) * ps.getSpeed()
+	yDif := math.Sin(command.Params["directionAngelRad"].(float64)) * ps.getSpeed()
+	log.Printf("update Direction : x : %f, y: %f  \n", xDif, yDif)
 	ps.Direction.X = float32(xDif)
 	ps.Direction.Y = float32(yDif)
 

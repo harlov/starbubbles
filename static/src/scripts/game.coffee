@@ -13,13 +13,14 @@ class Game
         @controls = new Controls ctx
 
     pipeRecive: (data) ->
+        ctx = @
         ball = data.Params.Balls[0]
         console.log(@controls.centerPos)
-        @clearCanvas()
-        
-        @drawBack()
-        @drawPlayerBubble @controls.centerPos.x, @controls.centerPos.y, ball.Mass
-        @controls.update()
+        requestAnimationFrame () ->
+            ctx.clearCanvas()
+            ctx.drawBack(ball.Position.X, ball.Position.Y)
+            ctx.drawPlayerBubble ctx.controls.centerPos.x, ctx.controls.centerPos.y, ball.Mass
+            ctx.controls.update()
 
         
     loadResources: () ->
@@ -29,12 +30,19 @@ class Game
 
         @resources['back'] = img_back
 
-    drawBack: () ->
+    drawBorder: (cX, cY) ->
+        @dc.moveTo @centerPos.x, @centerPos.y
+        @dc.lineTo @mousePos.x,@mousePos.y
+        @dc.stroke()
+
+    drawBack: (cX, cY) ->
         bw = 135
         bh = 135
 
-        startPosX = 0
-        startPosY = 0
+        startPosX = - ( cX % bw )
+        startPosY = - ( cY % bh )
+
+        console.log(startPosX, startPosY)
 
         posX = startPosX
         posY = startPosY
@@ -45,7 +53,6 @@ class Game
             while posY < fH
                 @dc.drawImage(@resources['back'], posX, posY)
                 posY += bh
-                console.log posY, fH
             posX += bw
 
     initCanvas: ->        
